@@ -10,13 +10,13 @@ function resizeContainer() {
 // key controls
 function readKey(e) {
   if(e.key == 'ArrowRight')
-    champion.X += champion.speed, champion.Xdir = -1, champion.Ydir = 0;
+    champion.Xdir = -1, champion.Ydir = 0;
   if(e.key == 'ArrowLeft')
-    champion.X -= champion.speed , champion.Xdir = 1, champion.Ydir = 0;
+     champion.Xdir = 1, champion.Ydir = 0;
   if(e.key == 'ArrowUp')
-    champion.Y -= champion.speed, champion.Ydir = 1, champion.Xdir = 0;
+     champion.Ydir = 1, champion.Xdir = 0;
   if(e.key == 'ArrowDown')
-    champion.Y += champion.speed, champion.Ydir = -1, champion.Xdir = 0;
+     champion.Ydir = -1, champion.Xdir = 0;
 }
 
 // drawing functions

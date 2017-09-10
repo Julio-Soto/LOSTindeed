@@ -8,12 +8,13 @@ window.addEventListener('resize',resizeContainer,false);
 var myPOS = new POS(800,100,20,5,-3,1);
 
 function animation() {
-  //champion.X -= champion.speed * champion.Xdir;
-  //champion.Y -= champion.speed * champion.Ydir;
+  champion.move();
   myPOS.move();
   eraseCanvas(0.8);
   drawChampion();
   drawPOS(myPOS);
 }
 
-setInterval(animation,100);
+window.onload = function() {
+    setInterval(animation,100);
+}
