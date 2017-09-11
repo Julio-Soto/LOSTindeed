@@ -62,6 +62,17 @@ function drawTailVer(x, y, s, t) {
     champion.speed +=  10 * Math.cos(s * (Math.PI / 180));
   ctx.stroke();
 }
+function collisionChampPOS(){
+    var colided = false;
+    var d = 0;
+    for(i = 0; i < POSarray.length; ++i){
+        d = Math.sqrt( (POSarray[i].X - champion.X) * (POSarray[i].X - champion.X) + (POSarray[i].Y - champion.Y) * (POSarray[i].Y - champion.Y) );
+        if(d < POSarray[i].size * 2.0) colided = true;
+    }
+    if(colided == true)
+    console.log(colided);
+    return colided;
+}
 
 
 function drawPOS(pos) {
