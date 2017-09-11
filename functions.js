@@ -21,17 +21,48 @@ function readKey(e) {
 
 // drawing functions
 function drawChampion() {
+  drawCircle(champion.X, champion.Y, 5, "#aaf");
   ctx.strokeStyle="#aaf";
   if(champion.Xdir != 0)
-    drawEllipse(champion.X,champion.Y, 25, 10);
-   if(champion.Ydir != 0)
-    drawEllipse(champion.X,champion.Y, 13, 22);
-  
+    drawEllipse(champion.X - 4 * champion.Xdir,champion.Y, 25, 10),drawTailHor(champion.X, champion.Y, champion.s, champion.tail);
+   else
+    drawEllipse(champion.X,champion.Y - 4 * champion.Ydir, 13, 22),drawTailVer(champion.X, champion.Y, champion.s, champion.tail);
+}
+function drawTailHor(x, y, s, t) {
+  ctx.strokeStyle = "#aaf";
+  ctx.lineWidth = 2;
   ctx.beginPath();
-  ctx.moveTo(champion.X + 4 * champion.Xdir, champion.Y + 4 * champion.Ydir);
-  ctx.lineTo(champion.X + 100 * champion.Xdir, champion.Y + 100 * champion.Ydir);
+  ctx.moveTo(x, y);  
+
+  ctx.bezierCurveTo(
+    x + t * 0.45 * champion.Xdir + 20 * Math.cos(s * (Math.PI / 180)),
+    y + -25 * Math.sin(s * (Math.PI / 180)),
+    x + t * 0.70 * champion.Xdir + 10 * Math.cos(s * (Math.PI / 180)),
+    y + 20 * Math.sin(s * (Math.PI / 180)),
+    x + t * 1.0 * champion.Xdir + 10 * Math.cos(s * (Math.PI / 180)),
+    y + 1.0 * Math.sin(s * (Math.PI / 180))
+  );
+  champion.speed +=  10 * Math.cos(s * (Math.PI / 180));
   ctx.stroke();
 }
+function drawTailVer(x, y, s, t) {
+  ctx.strokeStyle = "#aaf";
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.moveTo(x, y);//initial point
+
+  ctx.bezierCurveTo(
+    x + -25 * Math.sin(s * (Math.PI / 180)),   
+    y + t * 0.45 * champion.Ydir + 20 * Math.cos(s * (Math.PI / 180)),
+    x + 20 * Math.sin(s * (Math.PI / 180)),
+    y + t * 0.70 * champion.Ydir + 10 * Math.cos(s * (Math.PI / 180)),
+    x - 1 * Math.sin(s * (Math.PI / 180)),
+    y + t * 1.0 * champion.Ydir + 10 * Math.cos(s * (Math.PI / 180))
+  );
+    champion.speed +=  10 * Math.cos(s * (Math.PI / 180));
+  ctx.stroke();
+}
+
 
 function drawPOS(pos) {
   drawCircle(pos.X,pos.Y,pos.size,'#220');  

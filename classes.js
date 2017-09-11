@@ -3,16 +3,22 @@
 var champion = {
   X : 150,
   Y : 250,
-  speed : 10,
+  r : 3,
+  s : 0,
+  tail : 80,
+  speed : 20,
   Xdir : -1,
   Ydir : 0,
   move : function(){
+      champion.s += 60;
+      if(champion.s == 360) champion.s = 0;
       if(champion.X + champion.speed * champion.Xdir * -1 < 900 && champion.X + champion.speed * champion.Xdir * -1 > 0)
         champion.X -= champion.speed * champion.Xdir;
       if(champion.Y + champion.speed * champion.Ydir * -1 < 500 && champion.Y + champion.speed * champion.Ydir * -1 > 0)
         champion.Y -= champion.speed * champion.Ydir;
   }
 }
+
 var POS = function (x,y,size,speed,xs,ys) {
   this.X = x;
   this.Y = y;
