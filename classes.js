@@ -3,6 +3,12 @@ var game = {
     paused : false,
     cornScore: 0
 }
+var explotion = {
+    X : 0,
+    Y : 0,
+    r : 0,
+    r2 : 30
+}
 var champion = {
   X : 150,
   Y : 250,

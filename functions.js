@@ -17,10 +17,21 @@ function readKey(e) {
      champion.Ydir = 1, champion.Xdir = 0;
   if(e.key == 'ArrowDown')
      champion.Ydir = -1, champion.Xdir = 0;
+  if(e.key == ' ')
+      if(game.paused == true) unPauseGame();
 }
 function pauseGame(){
-    eraseCanvas(1.0);
     clearInterval(interval);
+    //eraseCanvas(1.0);
+    explotion.X = champion.X;
+    explotion.Y = champion.Y;
+    interval = setInterval(deathAnimation,100);
+    setTimeout(function(){clearInterval(interval);},2000);
+    ctx.font = "30px Courier";
+    ctx.fillStyle = "chocolate";
+    ctx.fillText("DNA is Overated!",20,50);
+    ctx.font = "20px Courier";
+    ctx.fillText("<SPACE> to continue",20,100);
     game.paused = true;
 }
 function unPauseGame() {
@@ -90,8 +101,6 @@ function collisionChampPOS(){
     console.log('shiet colided');
     return colided;
 }
-
-
 function drawPOS(pos) {
   drawCircle(pos.X,pos.Y,pos.size,'#220');  
   ctx.beginPath();
@@ -101,14 +110,22 @@ function drawPOS(pos) {
   ctx.arc(pos.X-10,pos.Y + pos.size,pos.size,0,2*Math.PI);
   ctx.fill();
 }
-
+function drawExplotion(x,y,r,r2){
+  ctx.strokeStyle = 'red';
+  ctx.beginPath();
+  ctx.arc(x,y,r,0,2*Math.PI);
+  ctx.stroke();
+  ctx.strokeStyle = 'red';
+  ctx.beginPath();
+  ctx.arc(x,y,r2,0,2*Math.PI);
+  ctx.stroke();
+}
 function drawCircle(x,y,r,color) {
   ctx.fillStyle = color;//1a0d00  
   ctx.beginPath();
   ctx.arc(x,y,r,0,2*Math.PI);
   ctx.fill();
 }
-
 function drawEllipse(centerX, centerY, width, height) {
 	
   ctx.beginPath();
@@ -129,7 +146,6 @@ function drawEllipse(centerX, centerY, width, height) {
   ctx.stroke();
   ctx.closePath();	
 }   
-
 function eraseCanvas(opacity) {
   ctx.beginPath();
   ctx.rect(0, 0, 900, 500);
