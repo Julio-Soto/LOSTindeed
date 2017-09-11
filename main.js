@@ -4,15 +4,15 @@ var container = document.getElementById('container');
 window.addEventListener('keydown',readKey,false);
 window.addEventListener('resize',resizeContainer,false);
 var POSarray = [];
+var interval;
 
-POSarray.push(new POS(800,100,20,10,-3,1));
-POSarray.push(new POS(200,300,15,10,3,-2));
+setLevel01();
 
 function animation() {
   champion.move();
   for(i = 0; i < POSarray.length; ++i)
     POSarray[i].move();
-    collisionChampPOS();
+    if(collisionChampPOS()) pauseGame();
   eraseCanvas(1.0);
   drawChampion();
   for(i = 0; i < POSarray.length; ++i)
@@ -20,5 +20,5 @@ function animation() {
 }
 
 window.onload = function() {
-    setInterval(animation,100);
+    interval = setInterval(animation,100);
 }

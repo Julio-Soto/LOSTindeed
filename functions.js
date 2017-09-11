@@ -18,7 +18,24 @@ function readKey(e) {
   if(e.key == 'ArrowDown')
      champion.Ydir = -1, champion.Xdir = 0;
 }
+function pauseGame(){
+    eraseCanvas(1.0);
+    clearInterval(interval);
+    game.paused = true;
+}
+function unPauseGame() {
+    game.paused = false;
+    setLevel01();
+    interval = setInterval(animation,100);
+}
 
+function setLevel01(){
+    POSarray = [];
+    POSarray.push(new POS(800,100,20,10,-3,1));
+    POSarray.push(new POS(200,300,15,10,3,-2));
+    champion.X = 100;
+    champion.Y = 300;
+}
 // drawing functions
 function drawChampion() {
   drawCircle(champion.X, champion.Y, 5, "#aaf");
@@ -70,7 +87,7 @@ function collisionChampPOS(){
         if(d < POSarray[i].size * 2.0) colided = true;
     }
     if(colided == true)
-    console.log(colided);
+    console.log('shiet colided');
     return colided;
 }
 

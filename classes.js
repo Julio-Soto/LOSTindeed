@@ -1,5 +1,8 @@
 // classes ans objects
-
+var game = {
+    paused : false,
+    cornScore: 0
+}
 var champion = {
   X : 150,
   Y : 250,
