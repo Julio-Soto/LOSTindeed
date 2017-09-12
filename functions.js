@@ -108,6 +108,20 @@ function collisionChampPOS(){
     console.log('shiet colided');
     return colided;
 }
+function collisionChampCorn(){
+    var colided = false;
+    var d = 0;
+     d = Math.sqrt( (corn.X - champion.X) * (corn.X - champion.X) + (corn.Y - champion.Y) * (corn.Y - champion.Y) );
+    if(d < 40) colided = true,game.cornScore +=1,console.log('corn score: ' + game.cornScore);
+    return colided;
+}
+function resetCorn(){
+    corn.X = Math.random() * 800;
+    corn.Y = Math.random() * 400;
+}
+function addPOS(){
+    POSarray.push(new POS(Math.random() * 850,Math.random() * 450),5 + Math.random() * 10,10 + Math.random() * 10 )
+}
 function drawPOS(pos) {
   drawCircle(pos.X,pos.Y,pos.size,'#220');  
   ctx.beginPath();

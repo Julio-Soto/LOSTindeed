@@ -30,10 +30,12 @@ function animation() {
   for(i = 0; i < POSarray.length; ++i)
     drawPOS(POSarray[i]);
   drawCorn();
+  if(collisionChampPOS()) pauseGame();
+  if(collisionChampCorn()) resetCorn();
   champion.move();
   for(i = 0; i < POSarray.length; ++i)
     POSarray[i].move();
-    if(collisionChampPOS()) pauseGame();
+    
 }
 
 window.onload = function() {
