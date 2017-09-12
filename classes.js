@@ -44,4 +44,8 @@ var POS = function (x,y,size,speed,xs,ys) {
       this.Ys = this.Ys * -1;
   }
 }
-
+var cornGrain = function(x,y){
+    this.active = true;
+    this.X =      x;
+    this.Y =      y;
+}

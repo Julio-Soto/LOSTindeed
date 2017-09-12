@@ -26,13 +26,17 @@ function pauseGame(){
     explotion.X = champion.X;
     explotion.Y = champion.Y;
     interval = setInterval(deathAnimation,100);
-    setTimeout(function(){clearInterval(interval);},2000);
-    ctx.font = "30px Courier";
-    ctx.fillStyle = "chocolate";
-    ctx.fillText("DNA is Overated!",20,50);
-    ctx.font = "20px Courier";
-    ctx.fillText("<SPACE> to continue",20,100);
-    game.paused = true;
+    setTimeout(function(){clearInterval(interval);
+                          eraseCanvas(1.0);
+                          var msg = messages[Math.floor(Math.random() * messages.length)];
+                          ctx.font = "30px Courier";
+                          ctx.fillStyle = "chocolate";
+                          ctx.textAlign = "center";
+                          ctx.fillText(msg,C.width/2,C.height/2);
+                          ctx.font = "20px Courier";
+                          ctx.fillText("<SPACE> to continue",C.width/2,40 + C.height/2);
+                          game.paused = true;
+                },2000);
 }
 function unPauseGame() {
     game.paused = false;
@@ -44,8 +48,11 @@ function setLevel01(){
     POSarray = [];
     POSarray.push(new POS(800,100,20,10,-3,1));
     POSarray.push(new POS(200,300,15,10,3,-2));
+    corn = new cornGrain(100,100);
     champion.X = 100;
     champion.Y = 300;
+    champion.Xdir = -1;
+    champion.Ydir = 0;
 }
 // drawing functions
 function drawChampion() {
@@ -109,6 +116,10 @@ function drawPOS(pos) {
   ctx.beginPath();
   ctx.arc(pos.X-10,pos.Y + pos.size,pos.size,0,2*Math.PI);
   ctx.fill();
+}
+function drawCorn(){
+    if(corn.active)
+        drawCircle(corn.X,corn.Y,10,'yellow');
 }
 function drawExplotion(x,y,r,r2){
   ctx.strokeStyle = 'red';
