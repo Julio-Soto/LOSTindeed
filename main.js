@@ -15,7 +15,7 @@ var messages = ['DNA is Overated',
                 'Will you Find the Way?',
                 'Where Did You Make the Wrong Turn?',
                 'How Did you Even Get Here?'];
-setLevel01();
+areas[0].load(100,250,-1,0);
 
 function deathAnimation(){
     eraseCanvas(0.6);

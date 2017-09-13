@@ -1,5 +1,5 @@
 // primitive functions for game
-
+var areas = [];
 resizeContainer();
 function resizeContainer() {
   if(window.innerHeight > 600 ){
@@ -40,24 +40,62 @@ function pauseGame(){
 }
 function unPauseGame() {
     game.paused = false;
-    setLevel01();
+    setLevel01(100,250,-1,0);
     interval = setInterval(animation,100);
 }
 
-function setLevel01(){
+areas[0] = {
+    numberPOS: 1,
+    load : function(x,y,xdir,ydir){
+           POSarray = [];
+            doorArrayVer = [];
+            doorArrayHor = [];
+            for(k = 0;k < this.numberPOS; ++k)
+                POSarray.push(new POS(Math.random() * 850,
+                                      Math.random() * 450,
+                                      5 + Math.random() * 10,
+                                      10 + Math.random() * 10,
+                                      Math.random() * 3,
+                                      -3 + Math.random() * 6 ));
+            corn = new cornGrain(100,100);
+            doorArrayVer.push(new doorEntry(900,200,900,300,setLevel02,100,250,-1,0));
+            doorArrayVer.push(new doorEntry(0,300,0,400,8));
+            doorArrayHor.push(new doorEntry(200,0,300,0,3));
+            doorArrayHor.push(new doorEntry(50,0,150,0,4));
+            champion.X = x;
+            champion.Y = y;
+            champion.Xdir = xdir;
+            champion.Ydir = ydir;
+    }
+}
+
+function setLevel01(x,y,xdir,ydir){
     POSarray = [];
     doorArrayVer = [];
     doorArrayHor = [];
     POSarray.push(new POS(800,100,20,10,-3,1));
     corn = new cornGrain(100,100);
-    doorArrayVer.push(new doorEntry(900,200,900,300,5));
+    doorArrayVer.push(new doorEntry(900,200,900,300,setLevel02,100,250,-1,0));
     doorArrayVer.push(new doorEntry(0,300,0,400,8));
     doorArrayHor.push(new doorEntry(200,0,300,0,3));
     doorArrayHor.push(new doorEntry(50,0,150,0,4));
-    champion.X = 100;
-    champion.Y = 300;
-    champion.Xdir = -1;
-    champion.Ydir = 0;
+    champion.X = x;
+    champion.Y = y;
+    champion.Xdir = xdir;
+    champion.Ydir = ydir;
+}
+function setLevel02(x,y,xdir,ydir){
+    POSarray = [];
+    doorArrayVer = [];
+    doorArrayHor = [];
+    POSarray.push(new POS(800,100,20,10,-3,1));
+    corn = new cornGrain(400,200);
+    doorArrayVer.push(new doorEntry(0,200,0,300,setLevel01,800,250,1,0));
+    doorArrayHor.push(new doorEntry(700,0,800,0,setLevel01));
+    champion.X = x;
+    champion.Y = y;
+    champion.Xdir = xdir;
+    champion.Ydir = ydir;
 }
 // drawing functions
 function drawChampion() {
@@ -124,11 +162,11 @@ function collisionChampCorn(){
     return colided;
 }
 function collisionChampDoorVer(){
-    var colided = 666;
+    
     for(i = 0; i < doorArrayVer.length; ++i){
-        if(champion.Y > doorArrayVer[i].Y1 && champion.Y < doorArrayVer[i].Y2 ) colided = doorArrayVer[i].toArea;
+        if(champion.Y > doorArrayVer[i].Y1 && champion.Y < doorArrayVer[i].Y2 )  doorArrayVer[i].toArea(doorArrayVer[i].CX,doorArrayVer[i].CY,doorArrayVer[i].Xdir,doorArrayVer[i].Ydir);
     }
-    return colided;
+    
 }
 function collisionChampDoorHor(){
     var colided = 666;
@@ -212,7 +250,7 @@ function drawEllipse(centerX, centerY, width, height) {
     centerX - width/2, centerY + height/2, // C3
     centerX - width/2, centerY - height/2, // C4
     centerX, centerY - height/2); // A1
- 
+  ctx.lineWidth = 3;
   ctx.strokeStyle = "#aaf";
   ctx.stroke();
   ctx.closePath();	
