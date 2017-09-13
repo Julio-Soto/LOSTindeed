@@ -46,11 +46,14 @@ function unPauseGame() {
 
 function setLevel01(){
     POSarray = [];
-    doorArray = [];
+    doorArrayVer = [];
+    doorArrayHor = [];
     POSarray.push(new POS(800,100,20,10,-3,1));
     corn = new cornGrain(100,100);
-    doorArray.push(new doorEntry(900,200,300));
-    doorArray.push(new doorEntry(0,200,300));
+    doorArrayVer.push(new doorEntry(900,200,900,300,5));
+    doorArrayVer.push(new doorEntry(0,300,0,400,8));
+    doorArrayHor.push(new doorEntry(200,0,300,0,3));
+    doorArrayHor.push(new doorEntry(50,0,150,0,4));
     champion.X = 100;
     champion.Y = 300;
     champion.Xdir = -1;
@@ -100,7 +103,7 @@ function drawTailVer(x, y, s, t) {
   ctx.stroke();
 }
 function drawDoor(door){
-    drawLine(door.side,door.e1,door.side,door.e2,'#1b0000',10);
+    drawLine(door.X1,door.Y1,door.X2,door.Y2,'#1b0000',10);
 }
 function collisionChampPOS(){
     var colided = false;
@@ -120,17 +123,17 @@ function collisionChampCorn(){
     if(d < 40) colided = true,game.cornScore +=1,console.log('corn score: ' + game.cornScore);
     return colided;
 }
-function collisionChampDoorX(){
+function collisionChampDoorVer(){
     var colided = 666;
-    for(i = 0; i < doorArray.length; ++i){
-        if(champion.Y > doorArray[i].e1 && champion.Y < doorArray[i].e2 ) colided = i;
+    for(i = 0; i < doorArrayVer.length; ++i){
+        if(champion.Y > doorArrayVer[i].Y1 && champion.Y < doorArrayVer[i].Y2 ) colided = doorArrayVer[i].toArea;
     }
     return colided;
 }
-function collisionChampDoorY(){
+function collisionChampDoorHor(){
     var colided = 666;
-    for(i = 0; i < doorArray.length; ++i){
-        if(champion.X > doorArray[i].e1 && champion.X < doorArray[i].e2 ) colided = i;
+    for(i = 0; i < doorArrayHor.length; ++i){
+        if(champion.X > doorArrayHor[i].X1 && champion.X < doorArrayHor[i].X2 ) colided = doorArrayHor[i].toArea;
     }
     return colided;
 }

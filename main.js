@@ -4,7 +4,8 @@ var container = document.getElementById('container');
 window.addEventListener('keydown',readKey,false);
 window.addEventListener('resize',resizeContainer,false);
 var POSarray = [];
-var doorArray = [];
+var doorArrayVer = [];
+var doorArrayHor = [];
 var interval;
 var corn;
 var messages = ['DNA is Overated',
@@ -29,8 +30,10 @@ function deathAnimation(){
 function animation() {
  eraseCanvas(1.0);
  drawWalls();
- for(i = 0; i < doorArray.length; ++i)
-    drawDoor(doorArray[i]);    
+ for(i = 0; i < doorArrayVer.length; ++i)
+    drawDoor(doorArrayVer[i]);
+ for(i = 0; i < doorArrayHor.length; ++i)
+    drawDoor(doorArrayHor[i]); 
  drawChampion();
   for(i = 0; i < POSarray.length; ++i)
     drawPOS(POSarray[i]);

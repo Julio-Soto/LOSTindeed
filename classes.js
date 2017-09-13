@@ -23,9 +23,10 @@ var champion = {
       if(champion.s == 360) champion.s = 0;
       if(champion.X + champion.speed * champion.Xdir * -1 < 890 && champion.X + champion.speed * champion.Xdir * -1 > 10)
         champion.X -= champion.speed * champion.Xdir;
-      //else console.log('door ' + collisionChampDoorX());
+      else console.log('door ' + collisionChampDoorVer());
       if(champion.Y + champion.speed * champion.Ydir * -1 < 490 && champion.Y + champion.speed * champion.Ydir * -1 > 10)
         champion.Y -= champion.speed * champion.Ydir;
+      else console.log('door ' + collisionChampDoorHor());
   }
 }
 
@@ -50,8 +51,10 @@ var cornGrain = function(x,y){
     this.X =      x;
     this.Y =      y;
 }
-var doorEntry = function(side,e1,e2){
-    this.side = side;
-    this.e1 = e1;
-    this.e2 = e2;
+var doorEntry = function(x1,y1,x2,y2,a){
+    this.X1 = x1;
+    this.Y1 = y1;
+    this.X2 = x2;
+    this.Y2  = y2;
+    this.toArea = a;
 }
