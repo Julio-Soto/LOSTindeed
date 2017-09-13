@@ -25,7 +25,7 @@ var champion = {
       if(champion.X + champion.speed * champion.Xdir * -1 < 890 && champion.X + champion.speed * champion.Xdir * -1 > 10)
         champion.X -= champion.speed * champion.Xdir;
       else collisionChampDoorVer();
-      if(champion.Y + champion.speed * champion.Ydir * -1 < 490 && champion.Y + champion.speed * champion.Ydir * -1 > 10)
+      if(champion.Y + champion.speed * champion.Ydir * -1 < 480 && champion.Y + champion.speed * champion.Ydir * -1 > 20)
         champion.Y -= champion.speed * champion.Ydir;
       else collisionChampDoorHor();
   }

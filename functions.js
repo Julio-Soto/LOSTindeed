@@ -51,7 +51,7 @@ areas[0] = {
            POSarray = [];
             doorArrayVer = [];
             doorArrayHor = [];
-            for(k = 0;k < this.numberPOS; ++k)
+            for(k = 0;k < areas[0].numberPOS; ++k)
                 POSarray.push(new POS(Math.random() * 850,
                                       Math.random() * 450,
                                       5 + Math.random() * 10,
@@ -69,11 +69,11 @@ areas[0] = {
 areas[1] = {
     numberPOS: 1,
     load : function(x,y,xdir,ydir){
-        game.currentArea = 0;
-           POSarray = [];
+        game.currentArea = 1;
+            POSarray = [];
             doorArrayVer = [];
             doorArrayHor = [];
-            for(k = 0;k < this.numberPOS; ++k)
+            for(k = 0;k < areas[1].numberPOS; ++k)
                 POSarray.push(new POS(Math.random() * 850,
                                       Math.random() * 450,
                                       5 + Math.random() * 10,
@@ -82,6 +82,29 @@ areas[1] = {
                                       -3 + Math.random() * 6 ));
             corn = new cornGrain(100,100);
             doorArrayVer.push(new doorEntry(0,200,0,300,areas[0].load,800,250,1,0));
+            doorArrayHor.push(new doorEntry(400,0,500,0,areas[2].load,450,450,0,1));
+            champion.X = x;
+            champion.Y = y;
+            champion.Xdir = xdir;
+            champion.Ydir = ydir;
+    }
+}
+areas[2] = {
+    numberPOS: 1,
+    load : function(x,y,xdir,ydir){
+        game.currentArea = 2;
+            POSarray = [];
+            doorArrayVer = [];
+            doorArrayHor = [];
+            for(k = 0;k < areas[2].numberPOS; ++k)
+                POSarray.push(new POS(Math.random() * 850,
+                                      Math.random() * 450,
+                                      5 + Math.random() * 10,
+                                      10 + Math.random() * 10,
+                                      Math.random() * 3,
+                                      -3 + Math.random() * 6 ));
+            corn = new cornGrain(100,100);
+            doorArrayHor.push(new doorEntry(400,500,500,500,areas[1].load,450,50,0,-1));
             champion.X = x;
             champion.Y = y;
             champion.Xdir = xdir;
@@ -89,19 +112,6 @@ areas[1] = {
     }
 }
 
-/*function setLevel02(x,y,xdir,ydir){
-    POSarray = [];
-    doorArrayVer = [];
-    doorArrayHor = [];
-    POSarray.push(new POS(800,100,20,10,-3,1));
-    corn = new cornGrain(400,200);
-    doorArrayVer.push(new doorEntry(0,200,0,300,areas[0].load,800,250,1,0));
-    doorArrayHor.push(new doorEntry(700,0,800,0,areas[0].load,800,250,1,0));
-    champion.X = x;
-    champion.Y = y;
-    champion.Xdir = xdir;
-    champion.Ydir = ydir;
-}*/
 // drawing functions
 function drawChampion() {
   drawCircle(champion.X, champion.Y, 5, "#aaf");
@@ -174,11 +184,10 @@ function collisionChampDoorVer(){
     
 }
 function collisionChampDoorHor(){
-    var colided = 666;
-    for(i = 0; i < doorArrayHor.length; ++i){
-        if(champion.X > doorArrayHor[i].X1 && champion.X < doorArrayHor[i].X2 ) colided = doorArrayHor[i].toArea;
+   for(i = 0; i < doorArrayHor.length; ++i){
+        if(champion.X > doorArrayHor[i].X1 && champion.X < doorArrayHor[i].X2 )
+           if(champion.Y > ((doorArrayHor[i].Y1)-40) && champion.Y < ((doorArrayHor[i].Y1)+40)) doorArrayHor[i].toArea(doorArrayHor[i].CX,doorArrayHor[i].CY,doorArrayHor[i].Xdir,doorArrayHor[i].Ydir);
     }
-    return colided;
 }
 function resetCorn(){
     corn.X = Math.random() * 800;
