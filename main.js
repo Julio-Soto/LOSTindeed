@@ -4,6 +4,7 @@ var container = document.getElementById('container');
 window.addEventListener('keydown',readKey,false);
 window.addEventListener('resize',resizeContainer,false);
 var POSarray = [];
+var doorArray = [];
 var interval;
 var corn;
 var messages = ['DNA is Overated',
@@ -11,7 +12,8 @@ var messages = ['DNA is Overated',
                 'Saying Oh Shiet! might help.',
                 'how long will it be for you?',
                 'Will you Find the Way?',
-                'Did You Make a Wrong Turn?'];
+                'Where Did You Make the Wrong Turn?',
+                'How Did you Even Get Here?'];
 setLevel01();
 
 function deathAnimation(){
@@ -26,12 +28,15 @@ function deathAnimation(){
 }
 function animation() {
  eraseCanvas(1.0);
-  drawChampion();
+ drawWalls();
+ for(i = 0; i < doorArray.length; ++i)
+    drawDoor(doorArray[i]);    
+ drawChampion();
   for(i = 0; i < POSarray.length; ++i)
     drawPOS(POSarray[i]);
   drawCorn();
   if(collisionChampPOS()) pauseGame();
-  if(collisionChampCorn()) resetCorn();
+  if(collisionChampCorn()) resetCorn(), addPOS();
   champion.move();
   for(i = 0; i < POSarray.length; ++i)
     POSarray[i].move();

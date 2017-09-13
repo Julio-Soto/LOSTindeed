@@ -21,9 +21,10 @@ var champion = {
   move : function(){
       champion.s += 60;
       if(champion.s == 360) champion.s = 0;
-      if(champion.X + champion.speed * champion.Xdir * -1 < 900 && champion.X + champion.speed * champion.Xdir * -1 > 0)
+      if(champion.X + champion.speed * champion.Xdir * -1 < 890 && champion.X + champion.speed * champion.Xdir * -1 > 10)
         champion.X -= champion.speed * champion.Xdir;
-      if(champion.Y + champion.speed * champion.Ydir * -1 < 500 && champion.Y + champion.speed * champion.Ydir * -1 > 0)
+      //else console.log('door ' + collisionChampDoorX());
+      if(champion.Y + champion.speed * champion.Ydir * -1 < 490 && champion.Y + champion.speed * champion.Ydir * -1 > 10)
         champion.Y -= champion.speed * champion.Ydir;
   }
 }
@@ -48,4 +49,9 @@ var cornGrain = function(x,y){
     this.active = true;
     this.X =      x;
     this.Y =      y;
+}
+var doorEntry = function(side,e1,e2){
+    this.side = side;
+    this.e1 = e1;
+    this.e2 = e2;
 }

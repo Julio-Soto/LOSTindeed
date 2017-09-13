@@ -46,9 +46,11 @@ function unPauseGame() {
 
 function setLevel01(){
     POSarray = [];
+    doorArray = [];
     POSarray.push(new POS(800,100,20,10,-3,1));
-    POSarray.push(new POS(200,300,15,10,3,-2));
     corn = new cornGrain(100,100);
+    doorArray.push(new doorEntry(900,200,300));
+    doorArray.push(new doorEntry(0,200,300));
     champion.X = 100;
     champion.Y = 300;
     champion.Xdir = -1;
@@ -97,6 +99,9 @@ function drawTailVer(x, y, s, t) {
     champion.speed +=  10 * Math.cos(s * (Math.PI / 180));
   ctx.stroke();
 }
+function drawDoor(door){
+    drawLine(door.side,door.e1,door.side,door.e2,'#1b0000',10);
+}
 function collisionChampPOS(){
     var colided = false;
     var d = 0;
@@ -115,15 +120,34 @@ function collisionChampCorn(){
     if(d < 40) colided = true,game.cornScore +=1,console.log('corn score: ' + game.cornScore);
     return colided;
 }
+function collisionChampDoorX(){
+    var colided = 666;
+    for(i = 0; i < doorArray.length; ++i){
+        if(champion.Y > doorArray[i].e1 && champion.Y < doorArray[i].e2 ) colided = i;
+    }
+    return colided;
+}
+function collisionChampDoorY(){
+    var colided = 666;
+    for(i = 0; i < doorArray.length; ++i){
+        if(champion.X > doorArray[i].e1 && champion.X < doorArray[i].e2 ) colided = i;
+    }
+    return colided;
+}
 function resetCorn(){
     corn.X = Math.random() * 800;
     corn.Y = Math.random() * 400;
 }
 function addPOS(){
-    POSarray.push(new POS(Math.random() * 850,Math.random() * 450),5 + Math.random() * 10,10 + Math.random() * 10 )
+    POSarray.push(new POS(Math.random() * 850,
+                          Math.random() * 450,
+                          5 + Math.random() * 10,
+                          10 + Math.random() * 10,
+                          Math.random() * 3,
+                          -3 + Math.random() * 6 ));
 }
 function drawPOS(pos) {
-  drawCircle(pos.X,pos.Y,pos.size,'#220');  
+  drawCircle(pos.X,pos.Y,pos.size,'#440');  
   ctx.beginPath();
   ctx.arc(pos.X,pos.Y - pos.size,pos.size,0,2*Math.PI);
   ctx.fill();
@@ -134,6 +158,9 @@ function drawPOS(pos) {
 function drawCorn(){
     if(corn.active)
         drawCircle(corn.X,corn.Y,10,'yellow');
+}
+function drawWalls(){
+    drawRect(0,0,900,500,10);
 }
 function drawExplotion(x,y,r,r2){
   ctx.strokeStyle = 'red';
@@ -146,10 +173,26 @@ function drawExplotion(x,y,r,r2){
   ctx.stroke();
 }
 function drawCircle(x,y,r,color) {
-  ctx.fillStyle = color;//1a0d00  
+  ctx.fillStyle = color;//1a0d00 
+  ctx.lineWidth = 2;
   ctx.beginPath();
   ctx.arc(x,y,r,0,2*Math.PI);
   ctx.fill();
+}
+function drawLine(x1,y1,x2,y2,color,width){
+    ctx.beginPath();
+    ctx.strokeStyle = color;
+    ctx.lineWidth = width;
+    ctx.moveTo(x1,y1);
+    ctx.lineTo(x2,y2);
+    ctx.stroke();
+}
+function drawRect(x1,y1,x2,y2,w){
+      ctx.beginPath();
+      ctx.rect(x1, y1, x2, y2);
+      ctx.lineWidth = w;
+      ctx.strokeStyle = 'chocolate';
+      ctx.stroke();
 }
 function drawEllipse(centerX, centerY, width, height) {
 	
