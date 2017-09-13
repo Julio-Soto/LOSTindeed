@@ -40,13 +40,14 @@ function pauseGame(){
 }
 function unPauseGame() {
     game.paused = false;
-    setLevel01(100,250,-1,0);
+    areas[0].load(100,250,-1,0);
     interval = setInterval(animation,100);
 }
 
 areas[0] = {
     numberPOS: 1,
     load : function(x,y,xdir,ydir){
+        game.currentArea = 0;
            POSarray = [];
             doorArrayVer = [];
             doorArrayHor = [];
@@ -58,10 +59,29 @@ areas[0] = {
                                       Math.random() * 3,
                                       -3 + Math.random() * 6 ));
             corn = new cornGrain(100,100);
-            doorArrayVer.push(new doorEntry(900,200,900,300,setLevel02,100,250,-1,0));
-            doorArrayVer.push(new doorEntry(0,300,0,400,8));
-            doorArrayHor.push(new doorEntry(200,0,300,0,3));
-            doorArrayHor.push(new doorEntry(50,0,150,0,4));
+            doorArrayVer.push(new doorEntry(900,200,900,300,areas[1].load,100,250,-1,0));
+            champion.X = x;
+            champion.Y = y;
+            champion.Xdir = xdir;
+            champion.Ydir = ydir;
+    }
+}
+areas[1] = {
+    numberPOS: 1,
+    load : function(x,y,xdir,ydir){
+        game.currentArea = 0;
+           POSarray = [];
+            doorArrayVer = [];
+            doorArrayHor = [];
+            for(k = 0;k < this.numberPOS; ++k)
+                POSarray.push(new POS(Math.random() * 850,
+                                      Math.random() * 450,
+                                      5 + Math.random() * 10,
+                                      10 + Math.random() * 10,
+                                      Math.random() * 3,
+                                      -3 + Math.random() * 6 ));
+            corn = new cornGrain(100,100);
+            doorArrayVer.push(new doorEntry(0,200,0,300,areas[0].load,800,250,1,0));
             champion.X = x;
             champion.Y = y;
             champion.Xdir = xdir;
@@ -69,34 +89,19 @@ areas[0] = {
     }
 }
 
-function setLevel01(x,y,xdir,ydir){
-    POSarray = [];
-    doorArrayVer = [];
-    doorArrayHor = [];
-    POSarray.push(new POS(800,100,20,10,-3,1));
-    corn = new cornGrain(100,100);
-    doorArrayVer.push(new doorEntry(900,200,900,300,setLevel02,100,250,-1,0));
-    doorArrayVer.push(new doorEntry(0,300,0,400,8));
-    doorArrayHor.push(new doorEntry(200,0,300,0,3));
-    doorArrayHor.push(new doorEntry(50,0,150,0,4));
-    champion.X = x;
-    champion.Y = y;
-    champion.Xdir = xdir;
-    champion.Ydir = ydir;
-}
-function setLevel02(x,y,xdir,ydir){
+/*function setLevel02(x,y,xdir,ydir){
     POSarray = [];
     doorArrayVer = [];
     doorArrayHor = [];
     POSarray.push(new POS(800,100,20,10,-3,1));
     corn = new cornGrain(400,200);
-    doorArrayVer.push(new doorEntry(0,200,0,300,setLevel01,800,250,1,0));
-    doorArrayHor.push(new doorEntry(700,0,800,0,setLevel01));
+    doorArrayVer.push(new doorEntry(0,200,0,300,areas[0].load,800,250,1,0));
+    doorArrayHor.push(new doorEntry(700,0,800,0,areas[0].load,800,250,1,0));
     champion.X = x;
     champion.Y = y;
     champion.Xdir = xdir;
     champion.Ydir = ydir;
-}
+}*/
 // drawing functions
 function drawChampion() {
   drawCircle(champion.X, champion.Y, 5, "#aaf");
@@ -162,9 +167,9 @@ function collisionChampCorn(){
     return colided;
 }
 function collisionChampDoorVer(){
-    
     for(i = 0; i < doorArrayVer.length; ++i){
-        if(champion.Y > doorArrayVer[i].Y1 && champion.Y < doorArrayVer[i].Y2 )  doorArrayVer[i].toArea(doorArrayVer[i].CX,doorArrayVer[i].CY,doorArrayVer[i].Xdir,doorArrayVer[i].Ydir);
+        if(champion.Y > doorArrayVer[i].Y1 && champion.Y < doorArrayVer[i].Y2 )
+           if(champion.X > ((doorArrayVer[i].X1)-35) && champion.X < ((doorArrayVer[i].X1)+35)) doorArrayVer[i].toArea(doorArrayVer[i].CX,doorArrayVer[i].CY,doorArrayVer[i].Xdir,doorArrayVer[i].Ydir);
     }
     
 }
@@ -186,6 +191,7 @@ function addPOS(){
                           10 + Math.random() * 10,
                           Math.random() * 3,
                           -3 + Math.random() * 6 ));
+    areas[game.currentArea].numberPOS +=1;
 }
 function drawPOS(pos) {
   drawCircle(pos.X,pos.Y,pos.size,'#440');  
